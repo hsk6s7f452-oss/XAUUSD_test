@@ -253,7 +253,7 @@ for fib in FIBO_LEVELS:
             # SH→SLの下降が直近
             top=h[last_sh_idx]; bot=l[last_sl_idx]
             if top<=bot: continue
-            fib_level=top-(top-bot)*fib  # 下から数えたフィボ (戻り水準)
+            fib_level=bot+(top-bot)*fib  # 下から数えてfib%戻った水準 (38.2%=浅い, 61.8%=深い)
             tol=0.20*at[i]
             if abs(c[i]-fib_level)<=tol and c[i]<top:
                 win,pnl=eval_trade(o,h,l,c,at,i,'short',n)
@@ -274,7 +274,7 @@ for fib in FIBO_LEVELS:
             if not len(post_sh): continue
             swing_top=h[post_sh[-1]]; swing_bot=l[last_sl_idx]
             if swing_top<=swing_bot: continue
-            fib_level=swing_top-(swing_top-swing_bot)*fib  # 上から数えたフィボ (押し水準)
+            fib_level=swing_top-(swing_top-swing_bot)*fib  # 上から数えてfib%押した水準
             tol=0.20*at[i]
             if abs(c[i]-fib_level)<=tol and c[i]>swing_bot:
                 win,pnl=eval_trade(o,h,l,c,at,i,'long',n)
