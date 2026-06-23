@@ -203,3 +203,40 @@ print("  ・全エッジ: 1:1ATR (TP=+1ATR/SL=-1ATR)、スプレッド0.3pt込�
 print("  ・STABLE基準: 前半EV>0 かつ 後半EV>0 の両方")
 print("  ・n<15のエッジは除外済み (過学習リスク大)")
 print("  ・ロング側エッジは下落相場の影響でサンプル少なく参考値")
+
+# ── 追加: 抜けていたエッジ ──────────────────────────────────────
+
+print("\n" + "="*100)
+print("  追加エッジ (edge_unexplored / edge_wfa より)")
+print("="*100)
+print(f"  {'#':>3}  {'エッジ名':52s}  {'WR':>6}  {'EV/trade':>9}  {'n':>5}  {'頻度':>7}  [前半/後半]  特記")
+print("-"*100)
+
+import pandas as pd, numpy as np
+
+# ATRパーセンタイル
+atr_pct=np.full(n,np.nan)
+for i in range(200,n):
+    w=at[i-200:i]; w=w[~np.isnan(w)]
+    if len(w)>0: atr_pct[i]=np.sum(w<=at[i])/len(w)
+
+# ボリュームZスコア
+v=df['v'].values
+vm=pd.Series(v.astype(float)).rolling(20).mean().values
+vs=pd.Series(v.astype(float)).rolling(20).std().values
+v_z=np.full(n,np.nan)
+for i in range(20,n):
+    if vs[i]>0: v_z[i]=(v[i]-vm[i])/vs[i]
+
+print("\n  [ATRボラティリティ × 旗艦]")
+prow('A', "旗艦 × ATR中ボラ(50-80%ile)",
+     lambda i: i in fl and not np.isnan(atr_pct[i]) and 0.50<=atr_pct[i]<=0.80)
+
+print("\n  [時間帯ショート + SLOPING (07-12時がエッジあり)]")
+for hr, label in [(7,'07'), (8,'08'), (9,'09'), (10,'10'), (11,'11'), (12,'12'), (16,'16')]:
+    prow(label, f"hour{label}ショート + SLOPING",
+         lambda i,hr=hr: hour[i]==hr and reg[i] in ('UP','DOWN'))
+
+print("\n  [ボリュームクライマックス]")
+prow('V', "ボリュームクライマックス(z>2) 大陽線→ショート",
+     lambda i: not np.isnan(v_z[i]) and v_z[i]>2 and c[i]>o[i] and reg[i] in ('UP','DOWN'))
