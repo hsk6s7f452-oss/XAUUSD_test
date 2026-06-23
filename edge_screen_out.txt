@@ -1,0 +1,255 @@
+Loading...
+Screening H1 (horizon 24)...
+Screening M15 (horizon 32)...
+Screening M5 (horizon 48)...
+
+==============================================================================
+ALL RESULTS (n>=20), sorted by win rate
+==============================================================================
+EDGE                                             WR%      EV     n  MCL    totPt
+H1 hour10 short-bias                            63.4    4.76    93    4      443
+H1 SwingHigh sweep + below MA200 short          60.4    4.34    53    5      230
+H1 hour07 short-bias                            58.1    3.09    93    4      287
+M15 hour05 short-bias                           58.0    1.24   376   12      466
+M5 hour05 short-bias                            57.6    1.01  1128   17     1141
+H1 hour03 short-bias                            57.0    1.82    93    5      169
+H1 hour04 short-bias                            57.0    1.26    93    5      117
+M15 hour11 short-bias                           56.9    0.44   376   10      165
+M5 hour12 short-bias                            56.6    0.42  1128   13      474
+H1 bigbar-down continuation short               56.1   -0.60    41    3      -25
+H1 hour23 long-bias                             56.0    4.80    91    5      437
+M5 hour17 short-bias                            56.0    1.00  1128   15     1123
+M15 hour22 short-bias                           55.7    0.79   368   12      293
+H1 MSB-bear short                               55.4    1.11   101    7      112
+H1 close cross<MA50 short                       55.4    0.29    92    6       27
+H1 hour06 long-bias                             54.8    4.23    93    4      393
+H1 hour11 short-bias                            54.8    1.04    93    4       96
+H1 SwingHigh sweep @premium short               54.5    1.10    55    5       61
+M15 hour18 short-bias                           54.5    0.73   376    9      273
+M5 hour06 short-bias                            54.5    0.32  1128   16      364
+H1 hour16 short-bias                            54.3    2.00    94    5      188
+H1 hour19 short-bias                            54.3    0.78    94    4       74
+M15 hour12 short-bias                           54.3    0.49   376   11      184
+M5 SwingHigh sweep short                        54.0    0.25  1724   11      440
+M15 hour06 short-bias                           54.0    0.80   376   10      299
+M15 hour19 short-bias                           54.0    0.63   376   15      237
+H1 SwingHigh sweep short                        54.0   -0.72   126    5      -91
+M5 SwingHigh sweep + below MA200 short          53.8    0.29   762    8      218
+M5 5green reversal short                        53.8    0.81   632   11      513
+H1 hour09 short-bias                            53.8    0.09    93    6        8
+H1 FVG-bear fill short                          53.8    0.28   160    5       44
+M15 hour17 short-bias                           53.7    1.08   376   10      405
+M5 bigbar-up continuation long                  53.7    0.26   378    6       97
+M15 4green reversal short                       53.6    1.14   448    9      509
+M5 hour15 short-bias                            53.5    0.25  1128   16      280
+M15 hour07 short-bias                           53.5    0.47   376   16      176
+M5 hour11 short-bias                            53.4   -0.04  1128   19      -50
+H1 hour20 short-bias                            53.2    0.55    94    8       52
+M15 hour10 short-bias                           53.2   -0.38   376    8     -143
+M5 4green reversal short                        53.1    0.37  1392   16      515
+M5 3green reversal short                        53.0    0.20  2936   15      575
+M5 hour08 short-bias                            53.0   -0.16  1128   14     -183
+M5 close cross<MA50 short                       53.0    0.03   970    7       27
+M15 hour02 long-bias                            53.0    0.48   372   15      180
+M15 hour14 short-bias                           52.9    1.48   376    8      555
+M5 hour16 short-bias                            52.8    0.22  1128   14      251
+M15 3green reversal short                       52.8    0.52   978   11      511
+H1 hour14 short-bias                            52.7    0.35    93    4       32
+H1 3green reversal short                        52.7    0.10   262   11       26
+M15 bigbar-down fade long                       52.6   -0.66   152    5     -101
+M15 SwingHigh sweep @premium short              52.6    0.10   329    6       33
+M5 hour10 short-bias                            52.6   -0.35  1128   16     -391
+M5 SwingHigh sweep @premium short               52.6    0.04   955   11       41
+M15 SwingHigh sweep short                       52.5   -0.14   591    8      -85
+M15 FVG-bear fill short                         52.4    0.22   656    9      141
+M15 hour21 short-bias                           52.4    0.20   372   14       75
+M15 hour09 short-bias                           52.4   -1.00   376   14     -375
+H1 round# reject short                          52.4    1.97    42    5       83
+M15 5green reversal short                       52.3    0.28   216    9       60
+M5 hour02 short-bias                            52.2    0.51  1126   20      573
+H1 MSB-bear + below MA200 short                 52.2   -1.50    69    5     -103
+H1 hour22 long-bias                             52.2    3.30    92    4      304
+M5 FVG-bear fill short                          52.1   -0.05  1951   14      -98
+M5 hour21 short-bias                            51.9   -0.09  1116   19     -104
+M15 hour04 short-bias                           51.9   -0.98   374   10     -365
+M15 bigbar-up fade short                        51.7    0.13   143    6       18
+M15 hour03 long-bias                            51.6    0.67   372   12      248
+M5 hour18 short-bias                            51.6    0.00  1128   24        4
+M5 hour22 short-bias                            51.4   -0.36  1104   24     -399
+M5 hour03 long-bias                             51.3    0.19  1128   18      211
+M5 hour01 short-bias                            51.3   -0.07  1116   20      -81
+M15 hour23 long-bias                            51.2    0.26   367   11       96
+M5 round# bounce long                           51.1   -0.21   456   13      -94
+H1 hour17 long-bias                             51.1    2.72    94    7      256
+H1 hour18 short-bias                            51.1   -2.65    94    5     -249
+M15 hour15 short-bias                           51.1    0.41   376   11      154
+M15 RSI exit overbought short                   51.0   -0.63   259    8     -163
+M5 OB-bear tap short                            50.8   -0.35  1053   10     -364
+M15 hour13 short-bias                           50.8   -0.48   376   12     -180
+M5 hour14 short-bias                            50.8    0.09  1128   15      101
+M15 close cross<MA50 short                      50.8   -0.76   321   10     -243
+M5 hour04 short-bias                            50.6   -0.11  1128   26     -122
+H1 hour02 short-bias                            50.5   -1.39    93    6     -129
+H1 hour05 short-bias                            50.5    0.37    93    4       35
+H1 hour08 short-bias                            50.5    0.24    93    5       23
+H1 hour12 short-bias                            50.5   -0.84    93    6      -78
+M5 hour07 short-bias                            50.5   -0.16  1128   24     -176
+M5 hour13 long-bias                             50.5    0.10  1128   15      112
+M15 MSB-bear short                              50.5    0.15   402   10       59
+M15 round# reject short                         50.3   -0.26   159    9      -41
+M5 hour09 long-bias                             50.3    0.13  1128   21      149
+M5 hour19 short-bias                            50.2    0.14  1128   20      157
+H1 bigbar-up continuation long                  50.0   -1.02    28    3      -29
+H1 bigbar-up fade short                         50.0    0.42    28    2       12
+H1 hour21 short-bias                            50.0   -1.60    94    9     -150
+M15 hour01 long-bias                            50.0    0.06   372   12       23
+M5 MSB-bull long                                49.9   -0.11  1216   10     -128
+M5 hour19 long-bias                             49.8   -0.74  1128   15     -833
+M15 hour08 long-bias                            49.7   -0.20   376   13      -75
+M5 hour09 short-bias                            49.7   -0.73  1128   15     -826
+H1 hour01 long-bias                             49.5    1.11    93    5      103
+H1 hour08 long-bias                             49.5   -0.84    93    3      -79
+H1 hour12 long-bias                             49.5    0.24    93    9       23
+M5 MSB-bull + above MA200 long                  49.4   -0.18   722   16     -133
+M5 hour23 long-bias                             49.4   -0.34  1103   27     -371
+M5 hour13 short-bias                            49.4   -0.71  1128   19     -802
+M5 hour20 short-bias                            49.4   -0.49  1128   28     -553
+M5 RSI exit overbought short                    49.3   -0.38   783    7     -300
+M5 hour04 long-bias                             49.3   -0.50  1128   16     -566
+M15 MSB-bear + below MA200 short                49.3   -0.13   268   10      -34
+M15 OB-bear tap short                           49.2    0.13   329    9       42
+H1 4green reversal short                        49.2   -1.23   126   10     -155
+M15 hour08 short-bias                           49.2   -0.54   376   12     -203
+M15 hour16 long-bias                            49.2   -0.53   376    7     -198
+M5 hour20 long-bias                             49.2   -0.25  1128   22     -283
+H1 FVG-bull fill long                           49.2    2.35   177    6      415
+M15 round# bounce long                          49.0   -0.77   157   12     -121
+M5 MSB-bear short                               49.0   -0.40  1207   13     -481
+H1 hour18 long-bias                             48.9    2.05    94    5      192
+H1 hour21 long-bias                             48.9    0.37    94    4       35
+M15 hour13 long-bias                            48.9   -0.18   376   12      -66
+M15 hour20 short-bias                           48.9   -1.76   376   12     -663
+H1 OB-bear tap short                            48.8   -3.24    82    5     -266
+M5 bigbar-down continuation short               48.8   -0.18   447   13      -81
+M5 bigbar-down fade long                        48.8   -0.70   447    7     -313
+M5 hour07 long-bias                             48.8   -0.50  1128   19     -564
+M5 hour14 long-bias                             48.8   -0.75  1128   18     -843
+M5 close cross>MA50 long                        48.7   -0.33   969    9     -324
+M15 hour20 long-bias                            48.7    0.45   376   16      169
+M15 SwingHigh sweep + below MA200 short         48.7   -0.82   300   10     -245
+M5 5red reversal long                           48.6   -0.58   595    9     -348
+H1 RSI exit overbought short                    48.5   -2.16    66    4     -143
+H1 5green reversal short                        48.4    0.67    64    9       43
+H1 hour01 short-bias                            48.4   -2.63    93    4     -244
+H1 hour05 long-bias                             48.4   -1.33    93    6     -124
+H1 hour13 long-bias                             48.4    0.91    93    4       85
+H1 hour13 short-bias                            48.4   -2.56    93    6     -238
+M15 hour01 short-bias                           48.4   -1.02   372   12     -378
+M5 4red reversal long                           48.4   -0.57  1356   10     -778
+M5 hour22 long-bias                             48.3   -0.30  1104   28     -334
+M5 3red reversal long                           48.3   -0.53  2961   14    -1563
+M15 OB-bull tap long                            48.3    0.14   344   15       48
+M5 hour18 long-bias                             48.0   -0.66  1128   36     -744
+M15 close cross>MA50 long                       48.0   -0.82   321    8     -262
+M15 FVG-bull fill long                          48.0   -0.38   686   10     -262
+M5 FVG-bull fill long                           47.9   -0.68  2071   10    -1401
+M15 hour04 long-bias                            47.9    0.31   374   16      116
+M5 hour21 long-bias                             47.8   -0.53  1116   21     -591
+M5 MSB-bear + below MA200 short                 47.8   -0.60   778    9     -466
+M15 SwingLow sweep @discount long               47.7   -0.22   308    9      -68
+M15 bigbar-up continuation long                 47.6   -0.86   143    5     -123
+M15 SwingLow sweep long                         47.5   -0.50   625    9     -314
+H1 round# bounce long                           47.4    0.72    38    3       27
+M15 hour09 long-bias                            47.3    0.36   376   10      135
+M15 hour16 short-bias                           47.3   -1.05   376   13     -395
+H1 hour02 long-bias                             47.3   -0.14    93    8      -13
+M5 hour10 long-bias                             47.3   -0.28  1128   19     -317
+M5 hour01 long-bias                             47.0   -0.74  1116   22     -830
+H1 hour15 long-bias                             46.8    0.11    94    5       10
+H1 hour17 short-bias                            46.8   -3.87    94    4     -364
+M15 hour15 long-bias                            46.8   -1.44   376   12     -540
+H1 MSB-bull long                                46.7   -2.22    90    6     -200
+H1 3red reversal long                           46.7   -1.36   255    8     -346
+M15 hour10 long-bias                            46.5   -0.27   376   14     -101
+M5 SwingLow sweep long                          46.5   -0.60  1834   14    -1109
+M5 round# reject short                          46.5   -0.86   486   12     -420
+M15 3red reversal long                          46.4   -0.90   951   11     -859
+M15 SwingLow sweep + above MA200 long           46.3   -0.14   231   11      -32
+M15 MSB-bull long                               46.3   -1.03   391    7     -403
+M5 SwingLow sweep @discount long                46.3   -0.81   916   14     -740
+M5 hour16 long-bias                             46.3   -0.97  1128   20    -1091
+M5 RSI exit oversold long                       46.3   -0.81   815   18     -664
+H1 hour09 long-bias                             46.2   -0.69    93    5      -64
+M15 hour21 long-bias                            46.2   -1.13   372   13     -421
+M5 hour08 long-bias                             46.2   -0.53  1128   16     -593
+M5 hour11 long-bias                             46.2   -0.59  1128   13     -671
+M15 RSI exit oversold long                      46.1   -1.34   293   12     -391
+M15 hour06 long-bias                            46.0   -1.40   376   18     -525
+M15 hour07 long-bias                            46.0   -1.14   376   16     -430
+M15 hour14 long-bias                            46.0   -2.32   376    8     -872
+H1 SwingLow sweep + above MA200 long            45.9   -0.59    37    8      -22
+M5 hour02 long-bias                             45.8   -1.31  1126   20    -1477
+H1 hour15 short-bias                            45.7   -3.85    94    5     -362
+H1 hour19 long-bias                             45.7   -1.38    94    5     -130
+M15 hour12 long-bias                            45.7   -1.09   376   17     -410
+M15 hour17 long-bias                            45.7   -1.83   376   11     -689
+H1 hour22 short-bias                            45.7   -5.17    92    7     -476
+H1 4red reversal long                           45.6   -3.73   114   10     -425
+M5 bigbar-up fade short                         45.5   -1.02   378   10     -386
+M15 hour18 long-bias                            45.5   -1.33   376   15     -499
+M15 hour19 long-bias                            45.5   -1.39   376   20     -523
+M5 hour03 short-bias                            45.5   -1.14  1128   25    -1281
+H1 OB-bull tap long                             45.5   -1.69    77    4     -130
+M15 hour02 short-bias                           45.4   -1.51   372   12     -563
+M5 hour06 long-bias                             45.3   -0.94  1128   27    -1065
+M5 hour15 long-bias                             45.3   -0.96  1128   15    -1080
+H1 hour06 short-bias                            45.2   -4.83    93    5     -449
+H1 hour11 long-bias                             45.2   -1.64    93    4     -152
+M15 MSB-bull + above MA200 long                 45.0   -0.72   218    7     -157
+H1 hour16 long-bias                             44.7   -3.01    94    9     -283
+M5 SwingLow sweep + above MA200 long            44.6   -0.69   767   17     -527
+M15 5red reversal long                          44.4   -1.49   189    8     -282
+M5 OB-bull tap long                             44.3   -0.88  1075   12     -948
+H1 hour14 long-bias                             44.1   -2.01    93    6     -187
+M5 hour17 long-bias                             44.0   -1.60  1128   26    -1799
+H1 5red reversal long                           43.6   -5.86    55    8     -322
+H1 hour20 long-bias                             43.6   -2.69    94    6     -253
+M15 hour22 long-bias                            43.5   -1.57   368   12     -577
+M15 hour03 short-bias                           43.3   -2.05   372   11     -761
+M15 hour11 long-bias                            43.1   -1.04   376   12     -390
+M5 hour12 long-bias                             43.1   -1.05  1128   16    -1179
+M5 hour23 short-bias                            43.1   -1.09  1103   18    -1207
+M15 4red reversal long                          43.1   -1.96   432   10     -849
+H1 hour03 long-bias                             43.0   -2.42    93    7     -225
+H1 hour23 short-bias                            42.9   -6.01    91    8     -547
+M5 hour05 long-bias                             42.2   -1.63  1128   33    -1838
+M15 hour05 long-bias                            42.0   -1.84   376   11     -691
+H1 hour04 long-bias                             41.9   -2.20    93    8     -205
+H1 hour07 long-bias                             41.9   -3.69    93    5     -343
+H1 bigbar-down fade long                        41.5   -2.09    41    6      -86
+H1 SwingLow sweep long                          41.1   -2.80   141   10     -395
+H1 RSI exit oversold long                       40.8   -5.02    76    6     -382
+M15 bigbar-down continuation short              40.8   -1.49   152    7     -227
+M15 hour23 short-bias                           40.3   -2.55   367   19     -935
+H1 MSB-bull + above MA200 long                  38.3   -5.86    47    9     -275
+H1 close cross>MA50 long                        37.0   -4.19    92    7     -385
+H1 hour10 long-bias                             36.6   -5.36    93    5     -499
+H1 SwingLow sweep @discount long                35.8   -7.78    67    6     -521
+
+==============================================================================
+>>> EDGES: WR>=55% AND EV>0 (n>=25) <<<
+==============================================================================
+  H1 hour10 short-bias                         WR=63.4%  EV=+4.76pt  n=93  MCL=4  tot=+443pt
+  H1 SwingHigh sweep + below MA200 short       WR=60.4%  EV=+4.34pt  n=53  MCL=5  tot=+230pt
+  H1 hour07 short-bias                         WR=58.1%  EV=+3.09pt  n=93  MCL=4  tot=+287pt
+  M15 hour05 short-bias                        WR=58.0%  EV=+1.24pt  n=376  MCL=12  tot=+466pt
+  M5 hour05 short-bias                         WR=57.6%  EV=+1.01pt  n=1128  MCL=17  tot=+1141pt
+  H1 hour03 short-bias                         WR=57.0%  EV=+1.82pt  n=93  MCL=5  tot=+169pt
+  H1 hour04 short-bias                         WR=57.0%  EV=+1.26pt  n=93  MCL=5  tot=+117pt
+  M15 hour11 short-bias                        WR=56.9%  EV=+0.44pt  n=376  MCL=10  tot=+165pt
+  M5 hour12 short-bias                         WR=56.6%  EV=+0.42pt  n=1128  MCL=13  tot=+474pt
+  H1 hour23 long-bias                          WR=56.0%  EV=+4.80pt  n=91  MCL=5  tot=+437pt
+  M5 hour17 short-bias                         WR=56.0%  EV=+1.00pt  n=1128  MCL=15  tot=+1123pt
+  M15 hour22 short-bias                        WR=55.7%  EV=+0.79pt  n=368  MCL=12  tot=+293pt
+  H1 MSB-bear short                            WR=55.4%  EV=+1.11pt  n=101  MCL=7  tot=+112pt
+  H1 close cross<MA50 short                    WR=55.4%  EV=+0.29pt  n=92  MCL=6  tot=+27pt
