@@ -1,112 +1,179 @@
 """
-CONFLUENCE — stack filters on the flagship (H1 swing-high sweep 3bar short + sloping).
-Add: killzone hours, MA-overextension, premium (above MA50), big-sweep (deep wick).
-Watch WR/EV vs sample depletion. Also realistic-tradeability metrics:
-trades/month, MaxConsecLoss, avg hold (bars), expectancy in $.
-1:1 ATR. No look-ahead.
+コンフルエンス検証 — ダウ構造 × MA200 × フィボ
 """
 import pandas as pd, numpy as np, warnings
 warnings.filterwarnings('ignore')
+
 UP="/root/.claude/uploads/d3b4dd6d-4c2a-5492-a1b3-6ef4295aea59"
 SPREAD=0.3
+
 def load(p):
-    df=pd.read_csv(p); df['Date']=pd.to_datetime(df['Date'],format='%Y.%m.%d %H:%M')
+    df=pd.read_csv(p)
+    df['Date']=pd.to_datetime(df['Date'],format='%Y.%m.%d %H:%M')
     df=df.sort_values('Date').reset_index(drop=True)
-    df.rename(columns={'Open':'o','High':'h','Low':'l','Close':'c','Volume':'v'},inplace=True)
+    df.rename(columns={'Open':'o','High':'h','Low':'l','Close':'c'},inplace=True)
     return df
-def atr(h,l,c,p=14):
+
+def calc_atr(h,l,c,p=14):
     tr=np.maximum(h[1:]-l[1:],np.maximum(np.abs(h[1:]-c[:-1]),np.abs(l[1:]-c[:-1])))
     a=np.full(len(c),np.nan); a[1:]=pd.Series(tr).rolling(p).mean().values; return a
-def swings_w(h,l,n,w):
-    sh=np.zeros(n,bool); sl=np.zeros(n,bool)
-    for i in range(w,n-w):
-        if h[i]==h[i-w:i+w+1].max() and h[i]>h[i-1] and h[i]>h[i+1]: sh[i]=True
-        if l[i]==l[i-w:i+w+1].min() and l[i]<l[i-1] and l[i]<l[i+1]: sl[i]=True
-    return sh,sl
 
 h1=load(f"{UP}/cb66c61a-XAUUSD_H1_Feb_Jun.csv"); n=len(h1)
-o=h1['o'].values;h=h1['h'].values;l=h1['l'].values;c=h1['c'].values
-a=atr(h,l,c); h1['atr']=a
-ma50=pd.Series(c).rolling(50).mean().values
+o=h1['o'].values; h=h1['h'].values; l=h1['l'].values; c=h1['c'].values
+at=calc_atr(h,l,c)
 ma200=pd.Series(c).rolling(200).mean().values
-hr=h1['Date'].dt.hour.values
-mon=h1['Date'].dt.strftime('%Y-%m').values
-# regime
+ma50 =pd.Series(c).rolling(50).mean().values
+
 slope_k=50
 reg=np.array(['NA']*n,dtype=object)
 for i in range(n):
     if i<200+slope_k or np.isnan(ma200[i]) or np.isnan(ma200[i-slope_k]): continue
     s=(ma200[i]-ma200[i-slope_k])/ma200[i-slope_k]
-    if s>0.003 and c[i]>ma200[i]: reg[i]='UP'
+    if   s> 0.003 and c[i]>ma200[i]: reg[i]='UP'
     elif s<-0.003 and c[i]<ma200[i]: reg[i]='DOWN'
     else: reg[i]='RANGE'
 
-sh,sl=swings_w(h,l,n,1); shi=np.where(sh)[0]
-# base sweep events with metadata
-base=[]
-for i in range(2,n):
-    ps=shi[shi<i-1]
-    if len(ps) and h[i]>h[ps[-1]] and c[i]<h[ps[-1]]:
-        base.append(i)
+sh_arr=np.zeros(n,bool); sl_arr=np.zeros(n,bool)
+for i in range(2,n-2):
+    if all(h[i]>=h[i-j] for j in range(1,3)) and all(h[i]>=h[i+j] for j in range(1,3)): sh_arr[i]=True
+    if all(l[i]<=l[i-j] for j in range(1,3)) and all(l[i]<=l[i+j] for j in range(1,3)): sl_arr[i]=True
+shi=np.where(sh_arr)[0]; sli=np.where(sl_arr)[0]
 
-def trade(i,horizon=24):
-    if i+1>=n or np.isnan(a[i]) or a[i]<=0: return None
-    entry=o[i+1]; rng=a[i]; tp=entry-rng; sl_=entry+rng; end=min(n,i+1+horizon)
-    for k in range(i+1,end):
-        if h[k]>=sl_: return (False,-rng-SPREAD,k-i)
-        if l[k]<=tp: return (True,rng-SPREAD,k-i)
+def eval_trade(entry_bar, direction, rr=1.0, hold=24):
+    if entry_bar+1>=n: return None
+    entry=o[entry_bar+1]; rng=at[entry_bar]
+    if np.isnan(rng) or rng<=0: return None
+    tp = entry-rng*rr if direction=='short' else entry+rng*rr
+    sl = entry+rng    if direction=='short' else entry-rng
+    for k in range(entry_bar+1, min(n, entry_bar+1+hold)):
+        if direction=='short':
+            if h[k]>=sl: return -rng-SPREAD
+            if l[k]<=tp: return  rng*rr-SPREAD
+        else:
+            if l[k]<=sl: return -rng-SPREAD
+            if h[k]>=tp: return  rng*rr-SPREAD
     return None
-def report(label, idxs):
-    tr=[trade(i) for i in idxs]; tr=[(x,i) for x,i in zip(tr,idxs) if x]
-    if len(tr)<10:
-        print(f"{label:<48} n={len(tr)} (too few)"); return
-    res=[x[0] for x in tr]
-    wr=100*np.mean([r[0] for r in res]); ev=np.mean([r[1] for r in res])
-    tot=sum(r[1] for r in res); hold=np.mean([r[2] for r in res])
-    # MCL
-    mcl=cur=0
-    for r in res:
-        if not r[0]: cur+=1; mcl=max(mcl,cur)
-        else: cur=0
-    months=len(set(mon[i] for x,i in tr))
-    tpm=len(res)/max(months,1)
-    print(f"{label:<48} WR={wr:4.0f}% EV={ev:+5.2f} n={len(res):3d} tot={tot:+5.0f} "
-          f"MCL={mcl} hold={hold:3.1f}h ~{tpm:.0f}/mo")
 
-print("#"*96)
-print("# CONFLUENCE on flagship: H1 swing-high sweep (3bar) short")
-print("#"*96)
-report("1. raw sweep (no filter)", base)
-slope=[i for i in base if reg[i] in ('UP','DOWN')]
-report("2. + RANGE excluded (=flagship)", slope)
-report("3. + DOWN regime only", [i for i in base if reg[i]=='DOWN'])
-# killzone
-kz=[i for i in slope if hr[i] in (7,8,9,10,13,14,15,16)]
-report("4. flagship + killzone(UTC7-10,13-16)", kz)
-report("5. flagship + hour 7-10 only", [i for i in slope if hr[i] in (7,8,9,10)])
-# overextension: price above MA50 by >1 ATR at sweep
-ovx=[i for i in slope if not np.isnan(ma50[i]) and (c[i]-ma50[i])/a[i]>0.5]
-report("6. flagship + above MA50 (premium)", ovx)
-ovx2=[i for i in slope if not np.isnan(ma50[i]) and (h[i]-ma50[i])/a[i]>1.5]
-report("7. flagship + high stretched >1.5ATR vs MA50", ovx2)
-# deep wick sweep (rejection strength): wick above prior high large
-deep=[]
-for i in slope:
-    ps=shi[shi<i-1]
-    if len(ps):
-        lv=h[ps[-1]]; wick=h[i]-max(o[i],c[i])
-        if (h[i]-lv)>0.3*a[i] and wick>0.4*a[i]: deep.append(i)
-report("8. flagship + deep rejection wick", deep)
-# stacked best: flagship + killzone + premium
-stack=[i for i in slope if hr[i] in (7,8,9,10,13,14,15,16) and not np.isnan(ma50[i]) and c[i]>ma50[i]]
-report("9. flagship + killzone + above MA50", stack)
+def report(name, pnls):
+    if not pnls:
+        print(f"  {name:72s} n=0"); return
+    n_=len(pnls); wins=sum(1 for p in pnls if p>0)
+    wr=100*wins/n_; ev=np.mean(pnls)
+    h1p=pnls[:n_//2]; h2p=pnls[n_//2:]
+    ev1=np.mean(h1p) if h1p else 0; ev2=np.mean(h2p) if h2p else 0
+    stable=ev1>0 and ev2>0
+    flag='✅STABLE' if stable else '❌'
+    if stable and ev>5 and n_>=20: flag+='🔥'
+    print(f"  {name:72s} WR={wr:4.0f}% EV={ev:+6.2f} n={n_:4d}  [{ev1:+.1f}/{ev2:+.1f}]  {flag}")
 
-print("\n# half-split of flagship(2) and best stack:")
-mid=n//2
-for label,idxs in [("flagship",slope),("stack#9",stack)]:
-    for half,lo,hi in [("1st",0,mid),("2nd",mid,n)]:
-        sub=[i for i in idxs if lo<=i<hi]
-        tr=[trade(i) for i in sub]; tr=[x for x in tr if x]
-        if len(tr)>=8:
-            wr=100*np.mean([r[0] for r in tr]); ev=np.mean([r[1] for r in tr])
-            print(f"   {label} {half}: WR={wr:.0f}% EV={ev:+.2f} n={len(tr)}")
+# ダウ構造フラグ
+dow_down=np.zeros(n,bool)
+dow_up  =np.zeros(n,bool)
+for i in range(10,n):
+    psh=shi[shi<i]; psl=sli[sli<i]
+    if len(psh)<2 or len(psl)<2: continue
+    sh1=h[psh[-2]]; sh2=h[psh[-1]]
+    sl1=l[psl[-2]]; sl2=l[psl[-1]]
+    if sh2<sh1 and sl2<sl1: dow_down[i]=True
+    if sh2>sh1 and sl2>sl1: dow_up[i]=True
+
+# フィボゾーン (ショート用: 下降SH→SLからの戻り率)
+fib_s=np.zeros(n,float)
+for i in range(10,n):
+    if np.isnan(at[i]) or at[i]<=0: continue
+    psh=shi[shi<i]; psl=sli[sli<i]
+    if not len(psh) or not len(psl): continue
+    last_sh_idx=psh[-1]; last_sl_idx=psl[-1]
+    if last_sh_idx<=last_sl_idx: continue  # 下降スイングのみ
+    top=h[last_sh_idx]; bot=l[last_sl_idx]
+    if top<=bot: continue
+    retrace=(c[i]-bot)/(top-bot)
+    for fv in [0.382,0.500,0.618,0.786]:
+        if abs(retrace-fv)<=0.06:
+            fib_s[i]=fv; break
+
+# フィボゾーン (ロング用: 上昇SL→SHからの押し率)
+fib_l=np.zeros(n,float)
+for i in range(10,n):
+    if np.isnan(at[i]) or at[i]<=0: continue
+    psh=shi[shi<i]; psl=sli[sli<i]
+    if not len(psh) or not len(psl): continue
+    last_sh_idx=psh[-1]; last_sl_idx=psl[-1]
+    if last_sl_idx<=last_sh_idx: continue  # 上昇スイングのみ
+    pre_sh=psh[psh<last_sl_idx]
+    if not len(pre_sh): continue
+    top=h[pre_sh[-1]]; bot=l[last_sl_idx]
+    if top<=bot: continue
+    retrace=(top-c[i])/(top-bot)
+    for fv in [0.382,0.500,0.618,0.786]:
+        if abs(retrace-fv)<=0.06:
+            fib_l[i]=fv; break
+
+print("="*100)
+print("# コンフルエンス — 高安切り下げ × MA200 × フィボ")
+print("="*100)
+
+print("\n### ベースライン ###")
+base_slop=[eval_trade(i,'short') for i in range(10,n-1) if reg[i] in ('UP','DOWN')]
+base_slop=[p for p in base_slop if p is not None]
+base_dow =[eval_trade(i,'short') for i in range(10,n-1) if dow_down[i]]
+base_dow =[p for p in base_dow  if p is not None]
+base_both=[eval_trade(i,'short') for i in range(10,n-1) if reg[i] in ('UP','DOWN') and dow_down[i]]
+base_both=[p for p in base_both if p is not None]
+report("SLOPING毎足ショート (ベータ基準)", base_slop)
+report("ダウ切り下げ毎足ショート", base_dow)
+report("SLOPING + ダウ切り下げ毎足ショート", base_both)
+
+print("\n### フィボ × フィルター (ショート) ###")
+for fv in [0.382,0.500,0.618,0.786]:
+    raw=[]; sl=[]; dd=[]; ma=[]; sl_dd=[]; sl_ma=[]; dd_ma=[]; all3=[]
+    for i in range(10,n-1):
+        if fib_s[i]!=fv: continue
+        p=eval_trade(i,'short')
+        if p is None: continue
+        raw.append(p)
+        is_sl = reg[i] in ('UP','DOWN')
+        is_dd = dow_down[i]
+        is_ma = not np.isnan(ma200[i]) and c[i]<ma200[i]
+        if is_sl:           sl.append(p)
+        if is_dd:           dd.append(p)
+        if is_ma:           ma.append(p)
+        if is_sl and is_dd: sl_dd.append(p)
+        if is_sl and is_ma: sl_ma.append(p)
+        if is_dd and is_ma: dd_ma.append(p)
+        if is_sl and is_dd and is_ma: all3.append(p)
+    print(f"\n  ─ Fib{fv:.1%}戻り ─")
+    report(f"素", raw)
+    report(f"+ SLOPING", sl)
+    report(f"+ ダウ切り下げ", dd)
+    report(f"+ MA200下", ma)
+    report(f"+ SLOPING × ダウ切り下げ", sl_dd)
+    report(f"+ SLOPING × MA200下", sl_ma)
+    report(f"+ ダウ切り下げ × MA200下", dd_ma)
+    report(f"+ SLOPING × ダウ切り下げ × MA200下 [全部]", all3)
+
+print("\n### フィボ × フィルター (ロング) ###")
+for fv in [0.382,0.500,0.618]:
+    raw=[]; sl=[]; du=[]; ma=[]; sl_du=[]; all3=[]
+    for i in range(10,n-1):
+        if fib_l[i]!=fv: continue
+        p=eval_trade(i,'long')
+        if p is None: continue
+        raw.append(p)
+        is_sl = reg[i] in ('UP','DOWN')
+        is_du = dow_up[i]
+        is_ma = not np.isnan(ma200[i]) and c[i]>ma200[i]
+        if is_sl: sl.append(p)
+        if is_du: du.append(p)
+        if is_ma: ma.append(p)
+        if is_sl and is_du: sl_du.append(p)
+        if is_sl and is_du and is_ma: all3.append(p)
+    print(f"\n  ─ Fib{fv:.1%}押し (ロング) ─")
+    report(f"素", raw)
+    report(f"+ SLOPING", sl)
+    report(f"+ ダウ切り上げ", du)
+    report(f"+ MA200上", ma)
+    report(f"+ SLOPING × ダウ切り上げ", sl_du)
+    report(f"+ SLOPING × ダウ切り上げ × MA200上 [全部]", all3)
+
+print("\n" + "="*100)
